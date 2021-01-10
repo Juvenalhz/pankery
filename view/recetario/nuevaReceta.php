@@ -8,7 +8,7 @@ for ($i = 1; $i <= $_REQUEST['index']; $i++) {
     $cnt    = "CantidadMPAct" . $i;
     $materiaprima =  $_REQUEST[$mp];
     $cantidad     =  $_REQUEST[$cnt];
-    $resultados = $controlador->sp_nuevaReceta($idproducto,$materiaprima, $cantidad);
+    $resultados = $controlador->sp_nuevaReceta($idproducto,$materiaprima, $cantidad, $i);
     if ($i != $_REQUEST['index']) continue;
     $resultados2 = $controlador->sp_ActPrecioCosto($idproducto);
     $row = pg_fetch_assoc($resultados2);

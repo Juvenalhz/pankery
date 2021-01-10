@@ -34,7 +34,7 @@ $(document).ready(function () {
 });
 function receta(id) {
   $("#listReceta").empty();
-  index=0;
+  index = 0;
   console.log(id);
   $.ajax({
     url: "view/recetario/verReceta.php",
@@ -42,11 +42,17 @@ function receta(id) {
     data: { id: id },
     success: function (data) {
       var datos = JSON.parse(data);
-      $("#tituloReceta").html('RECETA '+datos[0].descrip);
+      $("#tituloReceta").html("RECETA " + datos[0].descrip);
       $.each(JSON.parse(data), function (i, info) {
         index++;
         $("#listReceta").append(
-          '<li class="list-group-item">'+index+' . '+info.materiaprima+' '+info.cantidad+' gr</li>'
+          '<li class="list-group-item">' +
+            index +
+            " . " +
+            info.materiaprima +
+            " " +
+            info.cantidad +
+            " gr</li>"
         );
       });
     },
@@ -313,18 +319,25 @@ function modificarReceta(id) {
             success: function (data) {
               ListaMP = "#materiaprimaAct" + i;
               $.each(JSON.parse(data), function (i, info) {
-                if ($(ListaMP).val() != info.id_mp) {
-                  $(ListaMP).append(
-                    '<option value="' +
-                      info.id_mp +
-                      '" id="mp_' +
-                      info.descp +
-                      '">' +
-                      info.descp +
-                      "</option>"
-                  );
+                for (let j = 1; j <= index; j++) {
+                  ListaMPseleccionados = "#materiaprimaAct" + j;
+                  if ($(ListaMPseleccionados).val() == info.id_mp) {
+                    break;
+                  }else {
+                    if (j < index) continue;
+                    $(ListaMP).append(
+                      '<option value="' +
+                        info.id_mp +
+                        '" id="mp_' +
+                        info.descp +
+                        '">' +
+                        info.descp +
+                        "</option>"
+                    );
+
+                  }
                 }
-              });
+                });
             },
           });
         }
