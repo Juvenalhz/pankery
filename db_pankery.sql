@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3beta1
 -- Dumped by pg_dump version 9.3beta1
--- Started on 2021-01-09 09:28:21
+-- Started on 2021-01-09 20:54:44
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -688,29 +688,43 @@ $$;
 ALTER FUNCTION public.sp_modifpedido(producto integer, precio double precision, cant double precision, costo double precision, pago character varying, client character varying, idpedido integer) OWNER TO postgres;
 
 --
--- TOC entry 227 (class 1255 OID 81530)
--- Name: sp_nuevareceta(integer, integer, double precision); Type: FUNCTION; Schema: public; Owner: postgres
+-- TOC entry 233 (class 1255 OID 89643)
+-- Name: sp_nuevareceta(integer, integer, double precision, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
-CREATE FUNCTION sp_nuevareceta(idproduct integer, idmp integer, cant double precision) RETURNS numeric
+CREATE FUNCTION sp_nuevareceta(idproduct integer, idmp integer, cant double precision, indexx integer) RETURNS numeric
     LANGUAGE plpgsql
     AS $$
 
 	DECLARE existe integer;
+		cantmp integer;
+		idrecetaanterior integer;
          	begin
 		existe:= (select count(*) from tbl_recetario where id_materiaprima = idmp and id_producto=idproduct); --Validando si existe el nuevo producto
 		if existe = 0 then -- si no existe, insert
-		INSERT INTO tbl_recetario(id_producto, id_materiaprima,cantidad)
-		VALUES (idproduct, idmp, cant);
+			cantmp:= (select count(*) from tbl_recetario where id_producto=idproduct);
+			if(indexx <= cantmp) then
+				indexx=indexx-1;
+				idrecetaanterior:=(select id_receta from tbl_recetario where id_producto=idproduct  order by id_receta asc limit 1 offset indexx );
+				
+				
+				UPDATE tbl_recetario
+				SET id_producto=idproduct, id_materiaprima=idmp, 
+				cantidad=cant
+				where id_receta = idrecetaanterior;
+			else
+				INSERT INTO tbl_recetario(id_producto, id_materiaprima,cantidad)
+				VALUES (idproduct, idmp, cant);	
+			end if;
 		else 
-		UPDATE tbl_recetario
-		SET id_producto=idproduct, id_materiaprima=idmp, 
-		cantidad=cant
-		where id_materiaprima = idmp and id_producto=idproduct;
+			UPDATE tbl_recetario
+			SET id_producto=idproduct, id_materiaprima=idmp, 
+			cantidad=cant
+			where id_materiaprima = idmp and id_producto=idproduct;
 		end if;
 		return 1;
---select * from  sp_nuevaReceta(1,)
-		
+--select * from  sp_nuevaReceta(3,12,100,2)
+		--select * from tbl_recetario where id_producto=3 
 
 
 End;
@@ -718,7 +732,7 @@ End;
 $$;
 
 
-ALTER FUNCTION public.sp_nuevareceta(idproduct integer, idmp integer, cant double precision) OWNER TO postgres;
+ALTER FUNCTION public.sp_nuevareceta(idproduct integer, idmp integer, cant double precision, indexx integer) OWNER TO postgres;
 
 --
 -- TOC entry 206 (class 1255 OID 48620)
@@ -750,7 +764,7 @@ $$;
 ALTER FUNCTION public.sp_nuevoarticulo(materiap character varying) OWNER TO postgres;
 
 --
--- TOC entry 228 (class 1255 OID 81531)
+-- TOC entry 227 (class 1255 OID 81531)
 -- Name: sp_nuevoegresofijo(character varying, double precision); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -812,7 +826,7 @@ $$;
 ALTER FUNCTION public.sp_nuevogastoef(egresofijo integer, fechacompra date, gasto double precision) OWNER TO postgres;
 
 --
--- TOC entry 232 (class 1255 OID 81533)
+-- TOC entry 231 (class 1255 OID 81533)
 -- Name: sp_nuevogastomp(integer, date, double precision, double precision, double precision, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -861,7 +875,7 @@ $$;
 ALTER FUNCTION public.sp_nuevogastomp(materiap integer, fechacompra date, cant double precision, precio double precision, pesomp double precision, numcompra integer) OWNER TO postgres;
 
 --
--- TOC entry 233 (class 1255 OID 81534)
+-- TOC entry 232 (class 1255 OID 81534)
 -- Name: sp_nuevomodifgastomp(integer, date, double precision, double precision, double precision, integer, integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -950,7 +964,7 @@ $$;
 ALTER FUNCTION public.sp_nuevopago(idpedido integer, nuevopago double precision, deuda double precision) OWNER TO postgres;
 
 --
--- TOC entry 231 (class 1255 OID 81537)
+-- TOC entry 230 (class 1255 OID 81537)
 -- Name: sp_nuevopedido(integer, double precision, double precision, double precision, character varying, character varying); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -996,7 +1010,7 @@ $$;
 ALTER FUNCTION public.sp_nuevopedido(producto integer, precio double precision, cantidad double precision, costo double precision, pago character varying, client character varying) OWNER TO postgres;
 
 --
--- TOC entry 229 (class 1255 OID 81538)
+-- TOC entry 228 (class 1255 OID 81538)
 -- Name: sp_nuevoproducto(character varying, double precision); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1025,7 +1039,7 @@ $$;
 ALTER FUNCTION public.sp_nuevoproducto(product character varying, prec double precision) OWNER TO postgres;
 
 --
--- TOC entry 230 (class 1255 OID 81539)
+-- TOC entry 229 (class 1255 OID 81539)
 -- Name: sp_receta(integer); Type: FUNCTION; Schema: public; Owner: postgres
 --
 
@@ -1771,10 +1785,10 @@ SELECT pg_catalog.setval('tbl_pedidos_id_pedidos_seq', 41, true);
 
 COPY tbl_productos (id_producto, descrip, estatus, precio_und) FROM stdin;
 3	2	1	7
-5	PANDEJAMON	1	8
-7	CATALINA	1	3.5089999999999999
-4	CACHAPA	1	0.10000000000000001
+5	PANDEJAMON	1	175.45559999999998
+4	CACHAPA	1	1.4328000000000003
 2	CANILLA	1	\N
+7	CATALINA	1	0.34999999999999998
 1	HAMBURGUESA	1	\N
 6	GORDITICOS	1	7.3986999999999998
 \.
@@ -1796,23 +1810,29 @@ SELECT pg_catalog.setval('tbl_productos_id_producto_seq', 7, true);
 --
 
 COPY tbl_recetario (id_receta, id_producto, materia_prima, id_materiaprima, cantidad) FROM stdin;
-1	1	\N	1	1000
 4	1	\N	7	2
 2	2	\N	7	100
-8	3	\N	8	1200
+15	7	\N	8	10
+16	7	\N	16	1
+21	5	\N	14	50
 6	2	\N	9	10
 7	2	\N	10	25
 11	2	\N	15	1
 3	1	\N	14	1000
 5	1	\N	14	1000
 12	1	\N	8	10
+22	5	\N	15	50
 13	6	\N	15	10.5
 10	6	\N	9	10.5
 9	6	\N	16	25
 14	6	\N	17	10.5
-15	7	\N	15	1
-16	7	\N	14	1
-17	4	\N	9	1
+23	5	\N	17	14
+17	4	\N	9	12
+8	4	\N	8	12
+1	4	\N	15	12
+18	4	\N	17	12
+19	3	\N	3	100
+20	3	\N	4	100
 \.
 
 
@@ -1822,7 +1842,7 @@ COPY tbl_recetario (id_receta, id_producto, materia_prima, id_materiaprima, cant
 -- Name: tbl_recetario_id_receta_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('tbl_recetario_id_receta_seq', 17, true);
+SELECT pg_catalog.setval('tbl_recetario_id_receta_seq', 23, true);
 
 
 --
@@ -1927,7 +1947,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2021-01-09 09:28:21
+-- Completed on 2021-01-09 20:54:44
 
 --
 -- PostgreSQL database dump complete
