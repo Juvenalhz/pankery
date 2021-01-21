@@ -15,7 +15,8 @@
                         <tr>
                             <th>ID</th>
                             <th>PPRODUCTO</th>
-                            <th>PRECIO ($)</th>
+                            <th>PRECIO COSTO ($)</th>
+                            <th>GANANCIA ($)</th>
                             <th>ACCION</th>
                         </tr>
                     </thead>
@@ -23,7 +24,8 @@
                         <tr>
                             <th>ID</th>
                             <th>PPRODUCTO</th>
-                            <th>PRECIO ($)</th>
+                            <th>PRECIO COSTO($)</th>
+                            <th>GANANCIA ($)</th>
                             <th>ACCION</th>
                         </tr>
                     </tfoot>
@@ -70,6 +72,36 @@
     </div>
 </div>
 
+
+<div class="modal fade bd-example-modal-sm" id="agregarganancia" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloReceta">Ganancia</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="tab-pane container" id="ganancia">
+                <form id="formganancia" name="formganancia" method="post" action="">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="monto">monto </label>
+                            <input type="numeric" class="form-control" id="montoganancia" name="montoganancia">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                            <button type="submit" class="btn btn-primary" id="guardarganancia">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade" id="modificarMateriaPrimaRecetario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
         <div class="modal-content">
@@ -89,13 +121,13 @@
                         <button type="submit" class="btn btn-primary" id="guardarReceta">Guardar</button>
                         <button type="button" class="btn btn-primary" style="float: right; margin-right: 1.5em; margin-left: 1.5em;" id="agregarmp">
                             <i class="fas fa-plus" aria-hidden="true"></i>
-                        </button></div>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 
 
 <!-- END MAIN CONTENT-->

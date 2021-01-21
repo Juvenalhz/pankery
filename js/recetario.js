@@ -22,6 +22,20 @@ $(document).ready(function () {
     modificarReceta(id);
   });
 
+  $("table#dataRecetario tbody").on("click", "#verganancia", function () {
+    var table = $("table#dataRecetario").DataTable();
+    var D = table.row($(this).parents("tr")).data();
+    var id = D.id_pro;
+    $("#formganancia")[0].reset();
+    $("#formganancia").append(
+      '<input type="hidden" name="id_producto" value="' + id + '">'
+    );
+    
+  });
+  $("#guardarganancia").on("click",  function () {
+    GuardarGanancia();
+  });
+
   $("table#dataRecetario").on("click", "#verreceta", function () {
     var table = $("table#dataRecetario").DataTable();
     var D = table.row($(this).parents("tr")).data();
@@ -115,8 +129,8 @@ function pestañaNuevoProducto() {
       '<label for="materiaprima">Producto</label>' +
       '<input type="text" class="form-control" id="productoRec" name="productoRec"></div>' +
       '<div class="form-group col-md-6">' +
-      '<label for="materiaprima">Precio</label>' +
-      '<input type="text" class="form-control" id="preciouni" name="preciouni"></div></div>' +
+      '<label for="materiaprima" style="display:none;">Precio</label>' +
+      '<input type="text" class="form-control" id="preciouni" name="preciouni" value="0" style="display:none;"></div></div>' +
       '<div class="form-group">' +
       '<div class="modal-footer">' +
       '<button type="button" class=" btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
@@ -153,6 +167,69 @@ function GuardarNuevoProducto() {
       var datos = new FormData($("form#formRec")[0]);
       $.ajax({
         url: "view/recetario/nuevoProducto.php",
+        type: "POST",
+        data: datos,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+          if (data == 1) {
+            _Title = "¡Enhorabuena!";
+            _Text = "Transacción exitosa";
+            _Type = "success";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1300,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            _Title = "Error!";
+            _Text = "Ya existe este producto.";
+            _Type = "error";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1700,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              // location.reload();
+            });
+          }
+        },
+      }).fail(function () {
+        swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
+      });
+    },
+  });
+}
+function GuardarGanancia() {
+  $("form[name='formganancia']").validate({
+    rules: {
+      montoganancia: {
+        required: true,
+        maxlength: 10,
+      },
+    },
+    messages: {
+      montoganancia: {
+        required: "Este campo es obligatorio.",
+        maxlength: "Excede el máximo de caracteres (10).",
+      }
+    },
+    submitHandler: function () {
+      // var file_data = $('#file').prop('files')[0];
+      var datos = new FormData($("form#formganancia")[0]);
+      $.ajax({
+        url: "view/recetario/gananciaproducto.php",
         type: "POST",
         data: datos,
         contentType: false,

@@ -396,7 +396,13 @@ function NuevoPedido() {
             ? ""
             : JSON.parse(data).find((encontrar) => encontrar.id_pro == id)
                 .precio;
-        $("#Precio").val(precio);
+        var ganancia =
+          $("#Producto").val() == ""
+            ? ""
+            : JSON.parse(data).find((encontrar) => encontrar.id_pro == id)
+                .ganancia;
+                console.log(JSON.parse(data));
+        $("#Precio").val((precio+ganancia));
         $("#Costo").val($("#Precio").val() * $("#Cantidad").val());
       });
     },
