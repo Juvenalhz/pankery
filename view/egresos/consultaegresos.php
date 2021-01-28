@@ -7,7 +7,21 @@
 		$Conf["data"][] = $registros;
 	}
 	
-	echo json_encode($Conf,JSON_NUMERIC_CHECK);
+		
+	if (empty($Conf)) {
+		$arreglo["data"] = array(
+
+			"id_compra" => "",
+			"tipogasto" => "",
+			"gasto" => "",
+			"nro_compra" => "",
+			"fecha_compra" => "",
+			"cantidad_mp" => "",
+			"peso" => "",
+			"precio" => "",
+		);
+		echo json_encode($arreglo);
+	} else echo json_encode($Conf,JSON_NUMERIC_CHECK);
 
 
 

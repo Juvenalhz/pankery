@@ -7,7 +7,16 @@
 		$Conf["data"][] = $registros;
 	}
 	
-	echo json_encode($Conf,JSON_NUMERIC_CHECK);
+		
+	if (empty($Conf)) {
+		$arreglo["data"] = array(
+
+			"id_egresofijo" => "",
+			"egresofijo" => "",
+			"costo" => ""
+		);
+		echo json_encode($arreglo);
+	} else echo json_encode($Conf,JSON_NUMERIC_CHECK);
 
 
 

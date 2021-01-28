@@ -7,8 +7,18 @@
 		$Conf["data"][] = $registros;
 	}
 	
-	echo json_encode($Conf,JSON_NUMERIC_CHECK);
+		
+	if (empty($Conf)) {
+		$arreglo["data"] = array(
 
+			"id_finanzahist" => "",
+			"tipo" => "",
+			"descripcion" => "",
+			"monto" => "",
+			"fecha" => ""
+		);
+		echo json_encode($arreglo);
+	} else echo json_encode($Conf,JSON_NUMERIC_CHECK);
 
 
 

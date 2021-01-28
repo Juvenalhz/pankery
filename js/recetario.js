@@ -3,12 +3,14 @@ $(document).ready(function () {
   $("#agregarProducto").click(function () {
     pestañaNuevoProducto();
   });
-
   $(document).on("click", "#guardarproducto", function () {
     GuardarNuevoProducto();
   });
   $(document).on("click", "#agregarmp", function () {
     agregarMPReceta();
+  });
+  $(document).on("click", "#deleteMP", function () {
+   $(this).parent().remove();    
   });
   $("table#dataRecetario tbody").on("click", "#recetario", function () {
     var table = $("table#dataRecetario").DataTable();
@@ -77,6 +79,8 @@ function receta(id) {
 function agregarMPReceta() {
   index++;
   $("#formreceta").append(
+    '<div class="mprec">' +
+    "<button type='button' class='close' aria-label='Close' id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
     '<div class="form-row" style="padding-top: 1em;">' +
       '<div class="form-group col-md-6">' +
       '<label for="materiaprima">Materia Prima</label>' +
@@ -92,7 +96,7 @@ function agregarMPReceta() {
       index +
       '" name="CantidadMPAct' +
       index +
-      '"></div></div>'
+      '"></div></div></div>'
   );
   ListaMP = "#materiaprimaAct" + index;
   //  $("#materiaprimaAct").empty();
@@ -352,6 +356,8 @@ function modificarReceta(id) {
         $.each(JSON.parse(data), async function (i, info) {
           index = index + 1;
           $("#formreceta").append(
+            '<div>' +
+            "<button type='button' class='close' aria-label='Close'  id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
             '<div class="form-row" style="padding-top: 1em;">' +
               '<div class="form-group col-md-6">' +
               '<label for="materiaprima">Materia Prima</label>' +
@@ -376,7 +382,7 @@ function modificarReceta(id) {
               index +
               '" value="' +
               info.cantidad +
-              '"></div></div>'
+              '"></div></div></div>'
           );
         });
       } else {
