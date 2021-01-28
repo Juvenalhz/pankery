@@ -24,7 +24,7 @@
     <script src="vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="vendor/chartjs/Chart.bundle.min.js"></script>
     <script src="vendor/select2/select2.min.js"></script>
-    <script src="js/jquery-validation-1.19.2/dist/jquery.validate.min.js"></script>
+    <script src="js/jquery-validation-1.19.2/distt/jquery.validate.min.js"></script>
     <script type="text/javascript" src="js/jquery.datatable.js"></script>
     <script src="js/datatableapp.js"></script>
     <script  type="text/javascript">datatables_apps()</script>
