@@ -8,7 +8,19 @@
 		$list["data"][] = $registros;
 	}
 	
-	echo json_encode($list);
+	if (empty($list)) {
+		$arreglo["data"] = array(
+
+			"id_pedidos" => "",
+			"cliente" => "",
+			"descr" => "",
+			"cantidad" => "",
+			"total" => "",
+			"monto" => "",
+			"estatus" => ""
+		);
+		echo json_encode($arreglo);
+	} else echo json_encode($list);
 
 
 

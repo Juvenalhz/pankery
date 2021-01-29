@@ -16,10 +16,18 @@ include_once("../../model/recetarioModelo.php");
 			    return $resultado;
 			
 			}
-			public function sp_nuevaReceta($idproducto,$materiaprima,$cantidad){
+			public function sp_cambiarGanancia($monto,$id_producto){
+				$this->recetario->set("monto",$monto);
+				$this->recetario->set("id_producto",$id_producto);
+				$resultado=$this->recetario->sp_cambiarGanancia();
+			    return $resultado;
+			
+			}
+			public function sp_nuevaReceta($idproducto,$materiaprima,$cantidad,$indexmp){
 				$this->recetario->set("idproducto",$idproducto);
 				$this->recetario->set("materiaprima",$materiaprima);
 				$this->recetario->set("cantidad",$cantidad);
+				$this->recetario->set("indexmp",$indexmp);
 				$resultado=$this->recetario->sp_nuevaReceta();
 			    return $resultado;
 				

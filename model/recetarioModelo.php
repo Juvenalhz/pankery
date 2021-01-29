@@ -29,9 +29,16 @@ class Recetario
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_cambiarGanancia()
+	{
+		$sql = "select * from sp_cambiarGanancia('{$this->monto}','{$this->id_producto}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	public function sp_nuevaReceta()
 	{
-		$sql = "select * from sp_nuevaReceta('{$this->idproducto}','{$this->materiaprima}','{$this->cantidad}')";
+		$sql = "select * from sp_nuevaReceta('{$this->idproducto}','{$this->materiaprima}','{$this->cantidad}','{$this->indexmp}')";
 		//echo $sql;
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;

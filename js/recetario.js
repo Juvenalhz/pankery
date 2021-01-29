@@ -3,12 +3,14 @@ $(document).ready(function () {
   $("#agregarProducto").click(function () {
     pestañaNuevoProducto();
   });
-
   $(document).on("click", "#guardarproducto", function () {
     GuardarNuevoProducto();
   });
   $(document).on("click", "#agregarmp", function () {
     agregarMPReceta();
+  });
+  $(document).on("click", "#deleteMP", function () {
+   $(this).parent().remove();    
   });
   $("table#dataRecetario tbody").on("click", "#recetario", function () {
     var table = $("table#dataRecetario").DataTable();
@@ -20,6 +22,20 @@ $(document).ready(function () {
     );
     index = 0; //devolviendo valor de recetario verreceta
     modificarReceta(id);
+  });
+
+  $("table#dataRecetario tbody").on("click", "#verganancia", function () {
+    var table = $("table#dataRecetario").DataTable();
+    var D = table.row($(this).parents("tr")).data();
+    var id = D.id_pro;
+    $("#formganancia")[0].reset();
+    $("#formganancia").append(
+      '<input type="hidden" name="id_producto" value="' + id + '">'
+    );
+    
+  });
+  $("#guardarganancia").on("click",  function () {
+    GuardarGanancia();
   });
 
   $("table#dataRecetario").on("click", "#verreceta", function () {
@@ -34,7 +50,7 @@ $(document).ready(function () {
 });
 function receta(id) {
   $("#listReceta").empty();
-  index=0;
+  index = 0;
   console.log(id);
   $.ajax({
     url: "view/recetario/verReceta.php",
@@ -42,11 +58,17 @@ function receta(id) {
     data: { id: id },
     success: function (data) {
       var datos = JSON.parse(data);
-      $("#tituloReceta").html('RECETA '+datos[0].descrip);
+      $("#tituloReceta").html("RECETA " + datos[0].descrip);
       $.each(JSON.parse(data), function (i, info) {
         index++;
         $("#listReceta").append(
-          '<li class="list-group-item">'+index+' . '+info.materiaprima+' '+info.cantidad+' gr</li>'
+          '<li class="list-group-item">' +
+            index +
+            " . " +
+            info.materiaprima +
+            " " +
+            info.cantidad +
+            " gr</li>"
         );
       });
     },
@@ -57,6 +79,8 @@ function receta(id) {
 function agregarMPReceta() {
   index++;
   $("#formreceta").append(
+    '<div class="mprec">' +
+    "<button type='button' class='close' aria-label='Close' id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
     '<div class="form-row" style="padding-top: 1em;">' +
       '<div class="form-group col-md-6">' +
       '<label for="materiaprima">Materia Prima</label>' +
@@ -72,7 +96,7 @@ function agregarMPReceta() {
       index +
       '" name="CantidadMPAct' +
       index +
-      '"></div></div>'
+      '"></div></div></div>'
   );
   ListaMP = "#materiaprimaAct" + index;
   //  $("#materiaprimaAct").empty();
@@ -109,8 +133,8 @@ function pestañaNuevoProducto() {
       '<label for="materiaprima">Producto</label>' +
       '<input type="text" class="form-control" id="productoRec" name="productoRec"></div>' +
       '<div class="form-group col-md-6">' +
-      '<label for="materiaprima">Precio</label>' +
-      '<input type="text" class="form-control" id="preciouni" name="preciouni"></div></div>' +
+      '<label for="materiaprima" style="display:none;">Precio</label>' +
+      '<input type="text" class="form-control" id="preciouni" name="preciouni" value="0" style="display:none;"></div></div>' +
       '<div class="form-group">' +
       '<div class="modal-footer">' +
       '<button type="button" class=" btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
@@ -147,6 +171,69 @@ function GuardarNuevoProducto() {
       var datos = new FormData($("form#formRec")[0]);
       $.ajax({
         url: "view/recetario/nuevoProducto.php",
+        type: "POST",
+        data: datos,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+          if (data == 1) {
+            _Title = "¡Enhorabuena!";
+            _Text = "Transacción exitosa";
+            _Type = "success";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1300,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              location.reload();
+            });
+          } else {
+            _Title = "Error!";
+            _Text = "Ya existe este producto.";
+            _Type = "error";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1700,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              // location.reload();
+            });
+          }
+        },
+      }).fail(function () {
+        swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
+      });
+    },
+  });
+}
+function GuardarGanancia() {
+  $("form[name='formganancia']").validate({
+    rules: {
+      montoganancia: {
+        required: true,
+        maxlength: 10,
+      },
+    },
+    messages: {
+      montoganancia: {
+        required: "Este campo es obligatorio.",
+        maxlength: "Excede el máximo de caracteres (10).",
+      }
+    },
+    submitHandler: function () {
+      // var file_data = $('#file').prop('files')[0];
+      var datos = new FormData($("form#formganancia")[0]);
+      $.ajax({
+        url: "view/recetario/gananciaproducto.php",
         type: "POST",
         data: datos,
         contentType: false,
@@ -269,6 +356,8 @@ function modificarReceta(id) {
         $.each(JSON.parse(data), async function (i, info) {
           index = index + 1;
           $("#formreceta").append(
+            '<div>' +
+            "<button type='button' class='close' aria-label='Close'  id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
             '<div class="form-row" style="padding-top: 1em;">' +
               '<div class="form-group col-md-6">' +
               '<label for="materiaprima">Materia Prima</label>' +
@@ -293,7 +382,7 @@ function modificarReceta(id) {
               index +
               '" value="' +
               info.cantidad +
-              '"></div></div>'
+              '"></div></div></div>'
           );
         });
       } else {
@@ -313,18 +402,25 @@ function modificarReceta(id) {
             success: function (data) {
               ListaMP = "#materiaprimaAct" + i;
               $.each(JSON.parse(data), function (i, info) {
-                if ($(ListaMP).val() != info.id_mp) {
-                  $(ListaMP).append(
-                    '<option value="' +
-                      info.id_mp +
-                      '" id="mp_' +
-                      info.descp +
-                      '">' +
-                      info.descp +
-                      "</option>"
-                  );
+                for (let j = 1; j <= index; j++) {
+                  ListaMPseleccionados = "#materiaprimaAct" + j;
+                  if ($(ListaMPseleccionados).val() == info.id_mp) {
+                    break;
+                  }else {
+                    if (j < index) continue;
+                    $(ListaMP).append(
+                      '<option value="' +
+                        info.id_mp +
+                        '" id="mp_' +
+                        info.descp +
+                        '">' +
+                        info.descp +
+                        "</option>"
+                    );
+
+                  }
                 }
-              });
+                });
             },
           });
         }
