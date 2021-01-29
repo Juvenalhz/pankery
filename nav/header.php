@@ -189,6 +189,10 @@
                             <a href="recetario.php">
                                 <i class="fas fa-map-marker-alt"></i>Recetario</a>
                         </li>
+                        <li>
+                            <a href="cajachica.php">
+                                <i class="fas fa-pencil"></i>Caja Chica</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
