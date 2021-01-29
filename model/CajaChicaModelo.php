@@ -41,5 +41,11 @@ class CajaChica{
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+
+	public function sp_EgresoCajaChica(){
+		$sql = "SELECT * FROM sp_EgresoCajaChica($this->egreso)";
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	
 }

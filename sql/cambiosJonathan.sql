@@ -94,3 +94,83 @@ ALTER TABLE tbl_tipo_movimientos_id_movimiento_seq
 INSERT INTO tbl_tipo_movimientos( nombre) VALUES ('INGRESO');
 INSERT INTO tbl_tipo_movimientos( nombre) VALUES ('EGRESO');
 
+
+CREATE OR REPLACE FUNCTION sp_GuardarCajaChica( monto double precision)
+  RETURNS numeric AS
+$BODY$
+
+  DECLARE Finanza double precision ;
+  DECLARE total integer;
+  DECLARE caja integer;
+          begin
+    
+    Finanza:=(SELECT capital FROM tbl_finanzas);
+    caja:=(SELECT total FROM tbl_caja_chica); 
+
+    if Finanza <  monto then return 0; else
+    
+      total:=(Finanza - monto);
+
+      UPDATE tbl_caja_chica
+      SET  total=(monto+caja);
+
+      INSERT INTO tbl_movimiestos_caja_chica( tipo_movimiento, cantidad, usuario)
+      VALUES (1, monto, '');
+
+
+      INSERT INTO tbl_finanzashist(monto, tipo_tx, fecha, concepto)
+      VALUES (monto, 2, now(), 'MOVIMIENTO A CAJA CHICA');
+
+      UPDATE tbl_finanzas
+      SET capital=(total);
+
+      return 1;
+    end if;
+    
+  
+    
+
+End;
+
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION sp_GuardarCajaChica( double precision)
+  OWNER TO postgres;
+
+
+CREATE OR REPLACE FUNCTION sp_EgresoCajaChica( egreso double precision)
+  RETURNS numeric AS
+$BODY$
+
+  DECLARE Finanza double precision ;
+
+  DECLARE caja integer;
+          begin
+    
+    caja:=(SELECT c.total FROM tbl_caja_chica c); 
+
+    if caja <  egreso then return 0; else
+    
+      Finanza:=(caja - egreso);
+
+      UPDATE tbl_caja_chica
+      SET  total=Finanza;
+
+      INSERT INTO tbl_movimiestos_caja_chica( tipo_movimiento, cantidad, usuario)
+      VALUES (2, egreso, '');
+
+
+      return 1;
+    end if;
+    
+  
+    
+
+End;
+
+$BODY$
+  LANGUAGE plpgsql VOLATILE
+  COST 100;
+ALTER FUNCTION sp_EgresoCajaChica( double precision)
+  OWNER TO postgres;

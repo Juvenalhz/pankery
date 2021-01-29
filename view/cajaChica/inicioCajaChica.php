@@ -86,14 +86,14 @@
             </div>
             <div class="modal-body">
                 <div class="tab-pane container" id="ef">
-                    <form id="formCajaChica" name="formEF" method="post" action="">
+                    <form id="formCajaChica" name="cajach" method="post" action="">
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                <label for="Gasto">Total Disponible </label>
+                                <label for="disponible">Total Disponible </label>
                                 <input type="numeric" disabled="true"  class="form-control" id="disponible" name="disponible">
                             </div>
                             <div class="form-group col-md-6">
-                                <label for="Fecha">Monto a Ingresar</label>
+                                <label for="MontoIngreso">Monto a Ingresar</label>
                                 <input type="numeric" class="form-control" id="MontoIngreso" name="MontoIngreso">
                             </div>
                         </div>
@@ -102,6 +102,42 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                                 <button type="submit" class="btn btn-primary" id="guardargastoEgresoFijo">Guardar</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modalRetiro" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Egreso de Caja Chica</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="tab-pane container" id="ef">
+                    <form id="formEgresoChica" name="cajachEgreso" method="post" action="">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="caja">Total Caja </label>
+                                <input type="numeric" disabled="true"  class="form-control" id="caja" name="caja">
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="egreso">Monto a Retirar</label>
+                                <input type="numeric" class="form-control" id="egreso" name="egreso">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                <button type="submit" class="btn btn-primary" id="guardarcajaEgreso">Guardar</button>
                             </div>
                         </div>
                     </form>
