@@ -85,8 +85,29 @@ class EnrutadorRecetario
         }
     }
 }
-class EnrutadorEgresos
-{
+
+class EnrutadorCajaChica{
+    public function cargarVista($vista){
+        switch ($vista):
+
+            case "crear":
+                include_once('view/cajaChica/' . $vista . '.php');
+                break;
+            default:
+                include_once('view/error.php');
+        endswitch;
+    }
+
+    public function validarGet($variable){
+        if (empty($variable)) {
+            include_once('view/cajaChica/inicioCajaChica.php');
+        } else {
+            return true;
+        }
+    }
+}
+
+class EnrutadorEgresos{
     public function cargarVista($vista)
     {
         switch ($vista):
