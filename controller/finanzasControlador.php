@@ -15,6 +15,12 @@ include_once("../../model/finanzasModelo.php");
 			    return $resultado;
 			
 			}
+			public function sp_aggCapital($MontoIngreso){
+				$this->finanzas->set("MontoIngreso",$MontoIngreso);
+				$resultado=$this->finanzas->sp_aggCapital();
+			    return $resultado;
+			
+			}
 			public function sp_consultahistfinanza(){
 				$resultado=$this->finanzas->sp_consultahistfinanza();
 			    return $resultado;

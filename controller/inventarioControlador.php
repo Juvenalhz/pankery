@@ -39,6 +39,11 @@ include_once("../../model/inventarioModelo.php");
 			    return $resultado;
 			
 			}	
+			public function sp_listampprecio(){
+				$resultado=$this->inventario->sp_listampprecio();
+			    return $resultado;
+			
+			}	
 			public function sp_actualizarMP($materiaprima,$CantidadMP,$accionCant){
 				$this->inventario->set("materiaprima",$materiaprima);
 				$this->inventario->set("CantidadMP",$CantidadMP);

@@ -50,6 +50,13 @@ class Recetario
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_borrarReceta()
+	{
+		$sql = "select * from sp_borrarReceta('{$this->idproducto}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	public function sp_consultaProductos()
 	{
 		$sql = "select * from sp_consultaProductos()";

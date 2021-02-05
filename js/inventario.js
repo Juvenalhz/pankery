@@ -56,7 +56,7 @@ function eliminarArticulo(id){
             'El artículo ha sido elimnado permanentemente.',
             'success'
           ).then((result) => {
-            location.reload();
+            $("table#dataMateriaPrima").DataTable().ajax.reload();
           })
         },
       }).fail(function () {
@@ -102,7 +102,9 @@ function modificarArticulo() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataMateriaPrima").DataTable().ajax.reload();
+              $("#modificarMateriaPrima").modal('toggle');
+
             });
           } else {
             _Title = "Error!";
@@ -261,7 +263,8 @@ function ActualizarArticulo() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataMateriaPrima").DataTable().ajax.reload();
+              $("#exampleModal").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -331,7 +334,9 @@ function GuardarNuevoArticulo() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataMateriaPrima").DataTable().ajax.reload();
+              $("#exampleModal").modal('toggle');
+
             });
           } else {
             _Title = "Error!";

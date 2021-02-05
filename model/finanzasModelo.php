@@ -49,6 +49,13 @@ class Finanzas
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_aggCapital()
+	{
+		$sql = "select * from sp_aggCapital('{$this->MontoIngreso}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	public function sp_consultafinanza()
 	{
 		$sql = "select * from sp_consultafinanza()";

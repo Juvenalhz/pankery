@@ -160,7 +160,9 @@ function guardargastoEgresoFijo() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalaggventa").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -246,7 +248,9 @@ function guardarGasto() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalaggventa").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -314,7 +318,9 @@ function guardarNuevoEgresFijo() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalaggegresoFijo").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -382,7 +388,9 @@ function guardarEgresFijomodif() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalmodifegresoFijo").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -456,7 +464,9 @@ function guardarmodifGastoEF() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalmodifegresoFijo").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -542,7 +552,10 @@ function guardarmodifGasto() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              
+              $("table#tableegresos").DataTable().ajax.reload();
+              $("table#tableegresosfijo").DataTable().ajax.reload();
+              $("#modalmodificarGasto").modal('toggle');
             });
           } else {
             _Title = "Error!";

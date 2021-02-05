@@ -130,7 +130,10 @@ function guardarpago() {
                 swal.showLoading();
               },
             }).then((result) => {
-              //location.reload();
+               $("table#DataPendienteVentas").DataTable().ajax.reload();
+              $("table#DataProcesoVentas").DataTable().ajax.reload();
+              $("table#DataCobranzaVentas").DataTable().ajax.reload();
+              $("#modalagregarpagos").modal('toggle');
             });
           } else if (data == 0) {
             _Title = "Error!";
@@ -192,7 +195,9 @@ function eliminarPedido(id) {
           );
         },
       }).then((result) => {
-        location.reload();
+        $("table#DataPendienteVentas").DataTable().ajax.reload();
+        $("table#DataProcesoVentas").DataTable().ajax.reload();
+        $("table#DataCobranzaVentas").DataTable().ajax.reload();
       });
     }
   });
@@ -273,7 +278,10 @@ function guardarModifPedido() {
                 swal.showLoading();
               },
             }).then((result) => {
-              //location.reload();
+              $("table#DataPendienteVentas").DataTable().ajax.reload();
+              $("table#DataProcesoVentas").DataTable().ajax.reload();
+              $("table#DataCobranzaVentas").DataTable().ajax.reload();
+              $("#modalmodificarpedido").modal('toggle');
             });
           } else if (data == 0) {
             _Title = "Error!";
@@ -346,6 +354,10 @@ function cambioEstatus() {
               },
             }).then((result) => {
               location.reload();
+              $("table#DataPendienteVentas").DataTable().ajax.reload();
+              $("table#DataProcesoVentas").DataTable().ajax.reload();
+              $("table#DataCobranzaVentas").DataTable().ajax.reload();
+              $("#modalcambiarestatus").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -486,7 +498,9 @@ function guardarPedido() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              
+              $("table#DataPendienteVentas").DataTable().ajax.reload();
+              $("#modalaggventa").modal('toggle');
             });
           } else if (data == 0) {
             _Title = "Error!";

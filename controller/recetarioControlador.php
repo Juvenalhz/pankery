@@ -32,6 +32,12 @@ include_once("../../model/recetarioModelo.php");
 			    return $resultado;
 				
 			}
+			public function sp_borrarReceta($idproducto){
+				$this->recetario->set("idproducto",$idproducto);
+				$resultado=$this->recetario->sp_borrarReceta();
+			    return $resultado;
+				
+			}
 			public function sp_ActPrecioCosto($idproducto){
 				$this->recetario->set("idproducto",$idproducto);
 				$resultado=$this->recetario->sp_ActPrecioCosto();

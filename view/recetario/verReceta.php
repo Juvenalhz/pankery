@@ -8,5 +8,7 @@
     while($registros = pg_fetch_assoc($resultados)){
 		$list[] = $registros;
     }
-    echo json_encode($list);
+    if (empty($list)) {
+      echo 0;
+    } else echo json_encode($list);
 //}

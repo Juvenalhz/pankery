@@ -66,6 +66,13 @@ class Inventario
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_listampprecio()
+	{
+		$sql = "select * from sp_listampprecio()";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 
 	
 }

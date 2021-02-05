@@ -42,35 +42,43 @@ $(document).ready(function () {
     var table = $("table#dataRecetario").DataTable();
     var D = table.row($(this).parents("tr")).data();
     var id = D.id_pro;
-    receta(id);
+    var descp = D.descp;
+    receta(id,descp);
   });
   $(document).on("click", "#guardarReceta", function () {
     guardarReceta();
   });
 });
-function receta(id) {
+function  receta(id,descp) {
   $("#listReceta").empty();
   index = 0;
-  console.log(id);
   $.ajax({
     url: "view/recetario/verReceta.php",
     type: "POST",
     data: { id: id },
     success: function (data) {
-      var datos = JSON.parse(data);
-      $("#tituloReceta").html("RECETA " + datos[0].descrip);
-      $.each(JSON.parse(data), function (i, info) {
-        index++;
+      $("#tituloReceta").html("RECETA " + descp);
+      if (data == 0) {
         $("#listReceta").append(
           '<li class="list-group-item">' +
-            index +
-            " . " +
-            info.materiaprima +
-            " " +
-            info.cantidad +
-            " gr</li>"
+            "No se ha agregado ninguna receta" +
+            "</li>"
         );
-      });
+      } else {
+        $.each(JSON.parse(data), function (i, info) {
+          index++;
+          $("#listReceta").append(
+            '<li class="list-group-item">' +
+              index +
+              " . " +
+              info.materiaprima +
+              " " +
+              info.cantidad +
+              " gr</li>"
+          );
+        });
+      }
+      
     },
   }).fail(function () {
     swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
@@ -190,7 +198,8 @@ function GuardarNuevoProducto() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#exampleModal").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -253,7 +262,8 @@ function GuardarGanancia() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#agregarganancia").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -283,9 +293,9 @@ function guardarReceta() {
     validacion = "#materiaprimaAct" + i;
     validacion2 = "#CantidadMPAct" + i;
     if (
-      $(validacion).val() == undefined ||
+      
       $(validacion).val() == "Seleccione" ||
-      $(validacion2).val() == undefined ||
+     
       $(validacion2).val() == ""
     ) {
       Swal.fire({
@@ -320,7 +330,8 @@ function guardarReceta() {
                 swal.showLoading();
               },
             }).then((result) => {
-              location.reload();
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#modificarMateriaPrimaRecetario").modal('toggle');
             });
           } else {
             _Title = "Error!";
@@ -394,7 +405,7 @@ function modificarReceta(id) {
       if (value) {
         for (let i = 1; i <= index; i++) {
           $.ajax({
-            url: "view/inventario/listamp.php",
+            url: "view/recetario/listampconprecio.php",
             type: "POST",
             contentType: false,
             cache: false,

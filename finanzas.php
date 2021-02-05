@@ -31,7 +31,7 @@ include ('nav/footer.php')
  ?>
 
 
- <script type="text/javascript" src="js/egresos.js"></script>
+ <script type="text/javascript" src="js/finanzas.js"></script>
 
 
   <?php 

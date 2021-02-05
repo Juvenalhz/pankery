@@ -15,7 +15,7 @@ class Conexion
 		$this->host='127.0.0.1';
         //$this->host='192.168.1.6';
 		$this->user='postgres';
-		$this->password="postgres";
+		$this->password="123456";
 		//$this->password="Int3l1punt0.VEN";
 		//$this->password="Int3l1g3nsa";
 		$this->port='5432';
