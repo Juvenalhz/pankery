@@ -191,7 +191,7 @@
                         </li>
                         <li>
                             <a href="cajachica.php">
-                                <i class="fas fa-pencil"></i>Caja Chica</a>
+                                <i class="fas fa-lock"></i>Caja Chica</a>
                         </li>
                     </ul>
                 </nav>
