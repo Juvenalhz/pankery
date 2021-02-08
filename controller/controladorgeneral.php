@@ -16,6 +16,26 @@ include_once("model/finanzasModelo.php");
 			
 			}
 
+			public function sp_consultanumpedidos(){
+                
+				$resultado=$this->finanzas->sp_consultanumpedidos();
+			    return $resultado;
+			
+			}
+
+			public function sp_consultaCajachica(){
+                
+				$resultado=$this->finanzas->sp_consultaCajachica();
+			    return $resultado;
+			
+			}
+			public function sp_consultarecetas(){
+                
+				$resultado=$this->finanzas->sp_consultarecetas();
+			    return $resultado;
+			
+			}
+			
 		
 	}
 		

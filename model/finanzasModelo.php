@@ -63,6 +63,27 @@ class Finanzas
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_consultanumpedidos()
+	{
+		$sql = "select * from sp_consultanumpedidos()";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
+	public function sp_consultaCajachica()
+	{
+		$sql = "select * from sp_total_caja_chica()";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
+	public function sp_consultarecetas()
+	{
+		$sql = "select * from sp_consultarecetas()";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	
 
 	

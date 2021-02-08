@@ -206,7 +206,7 @@
                 <div class="section__content section__content--p30">
                     <div class="container-fluid">
                         <div class="header-wrap">
-                            <form class="form-header" action="" method="POST">
+                            <form class="form-header" action="" method="POST" style="visibility: hidden;">
                                 <input class="au-input au-input--xl" type="text" name="search" placeholder="Search for datas &amp; reports..." />
                                 <button class="au-btn--submit" type="submit">
                                     <i class="zmdi zmdi-search"></i>
@@ -214,7 +214,7 @@
                             </form>
                             <div class="header-button">
                                 <div class="noti-wrap">
-                                    <div class="noti__item js-item-menu">
+                                    <!-- <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-comment-more"></i>
                                         <span class="quantity">1</span>
                                         <div class="mess-dropdown js-dropdown">
@@ -245,8 +245,8 @@
                                                 <a href="#">View all messages</a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="noti__item js-item-menu">
+                                    </div> -->
+                                    <!-- <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-email"></i>
                                         <span class="quantity">1</span>
                                         <div class="email-dropdown js-dropdown">
@@ -284,8 +284,8 @@
                                                 <a href="#">See all emails</a>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="noti__item js-item-menu">
+                                    </div> -->
+                                    <!-- <div class="noti__item js-item-menu">
                                         <i class="zmdi zmdi-notifications"></i>
                                         <span class="quantity">3</span>
                                         <div class="notifi-dropdown js-dropdown">
@@ -323,7 +323,7 @@
                                                 <a href="#">All notifications</a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="account-wrap">
                                     <div class="account-item clearfix js-item-menu">
@@ -331,9 +331,9 @@
                                             <img src="images/icon/avatar-01.jpg" alt="John Doe" />
                                         </div>
                                         <div class="content">
-                                            <a class="js-acc-btn" href="#">john doe</a>
+                                            <a class="js-acc-btn" href="#">Ricardo Mujica</a>
                                         </div>
-                                        <div class="account-dropdown js-dropdown">
+                                        <!-- <div class="account-dropdown js-dropdown">
                                             <div class="info clearfix">
                                                 <div class="image">
                                                     <a href="#">
@@ -365,7 +365,7 @@
                                                 <a href="#">
                                                     <i class="zmdi zmdi-power"></i>Logout</a>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>

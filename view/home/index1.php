@@ -1,25 +1,6 @@
 
             <!-- HEADER DESKTOP-->
 
-            <?php
-            require('controller/controladorgeneral.php');
-            $controlador =new ControladorGeneral();
-            $resultados=$controlador->sp_consultanumpedidos();
-            $cantidadpedidos = pg_fetch_assoc($resultados);
-            require_once("controller/controladorgeneral.php");
-            $controlador = new ControladorGeneral();
-            $resultados = $controlador->sp_consultafinanza();
-            $data = pg_fetch_assoc($resultados);
-            require_once("controller/controladorgeneral.php");
-            $controlador = new ControladorGeneral();
-            $resultados = $controlador->sp_consultaCajachica();
-            $data2 = pg_fetch_assoc($resultados);
-            $controlador = new ControladorGeneral();
-            $resultados = $controlador->sp_consultarecetas();
-            $data3 = pg_fetch_assoc($resultados);
-            ?>
-            
-            
             <!-- MAIN CONTENT-->
             <div class="main-content">
                 <div class="section__content section__content--p30">
@@ -27,9 +8,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="overview-wrap">
-                                    <h2 class="title-1">Sistema Administrativo</h2>
-                                    <!-- <button class="au-btn au-btn-icon au-btn--blue">
-                                        <i class="zmdi zmdi-plus"></i>add item</button> -->
+                                    <h2 class="title-1">overview</h2>
+                                    <button class="au-btn au-btn-icon au-btn--blue">
+                                        <i class="zmdi zmdi-plus"></i>add item</button>
                                 </div>
                             </div>
                         </div>
@@ -42,8 +23,8 @@
                                                 <i class="zmdi zmdi-account-o"></i>
                                             </div>
                                             <div class="text">
-                                                <h2><?php echo $cantidadpedidos['cantidad'];?></h2>
-                                                <span>Pedidos </span>
+                                                <h2>10368</h2>
+                                                <span>members online</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -57,13 +38,11 @@
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
                                             <div class="icon">
-                                                <i class="zmdi zmdi-book"></i>
+                                                <i class="zmdi zmdi-shopping-cart"></i>
                                             </div>
                                             <div class="text">
-                                                <h2><?php
-                                            echo $data3["cantidadrec"];
-                                            ?></h2>
-                                                <span>Recetas</span>
+                                                <h2>388,688</h2>
+                                                <span>items solid</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -77,13 +56,11 @@
                                     <div class="overview__inner">
                                         <div class="overview-box clearfix">
                                             <div class="icon">
-                                                <i class="zmdi zmdi-lock"></i>
+                                                <i class="zmdi zmdi-calendar-note"></i>
                                             </div>
                                             <div class="text">
-                                                <h2><?php
-                                            echo $data2["total_out"];
-                                            ?></h2>
-                                                <span>Caja Chica</span>
+                                                <h2>1,086</h2>
+                                                <span>this week</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -100,10 +77,8 @@
                                                 <i class="zmdi zmdi-money"></i>
                                             </div>
                                             <div class="text">
-                                                <h2><?php
-                                                     echo $data["capital"];
-                                                     ?></h2>
-                                                <span>Capital</span>
+                                                <h2>$1,060,386</h2>
+                                                <span>total earnings</span>
                                             </div>
                                         </div>
                                         <div class="overview-chart">
@@ -113,7 +88,7 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="row">
+                        <div class="row">
                             <div class="col-lg-6">
                                 <div class="au-card recent-report">
                                     <div class="au-card-inner">
@@ -174,8 +149,8 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
-                        <!-- <div class="row">
+                        </div>
+                        <div class="row">
                             <div class="col-lg-9">
                                 <h2 class="title-1 m-b-25">Earnings By Items</h2>
                                 <div class="table-responsive table--no-card m-b-40">
@@ -556,7 +531,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div> -->
+                        </div>
                       
                     </div>
                 </div>
