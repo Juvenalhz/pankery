@@ -40,7 +40,7 @@ class Ventas
 	public function sp_modifPedido()
 	{
 		$sql = "select * from sp_modifPedido('{$this->producto}','{$this->precio}','{$this->cantidad}','{$this->costo}','{$this->pago}','{$this->cliente}','{$this->id}')";
-		//echo $sql;
+		echo $sql;
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}

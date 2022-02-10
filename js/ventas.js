@@ -1,11 +1,12 @@
 var index; //index para recetario
+var tanda;
 $(document).ready(function () {
   $("#agregarPedido").click(function () {
     NuevoPedido();
   });
   $(document).on("blur", "#Cantidad", function () {
     var id = $("#Producto").val();
-    $("#Costo").val($("#Precio").val() * $("#Cantidad").val());
+    $("#Costo").val($("#Precio").val() * ($("#Cantidad").val()/tanda));
   });
   $(document).on("click", "#guardarPedido", function () {
     guardarPedido();
@@ -413,9 +414,16 @@ function NuevoPedido() {
             ? ""
             : JSON.parse(data).find((encontrar) => encontrar.id_pro == id)
                 .ganancia;
+              
+
+            tanda = $("#Producto").val() == ""
+            ? ""
+            : JSON.parse(data).find((encontrar) => encontrar.id_pro == id)
+                .ctanda;
                 console.log(JSON.parse(data));
+                console.log(JSON.parse(tanda));
         $("#Precio").val((precio+ganancia));
-        $("#Costo").val($("#Precio").val() * $("#Cantidad").val());
+        $("#Costo").val($("#Cantidad").val()  * $("#Precio").val());
       });
     },
   }).fail(function () {

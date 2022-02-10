@@ -24,7 +24,14 @@ class Recetario
 
 	public function sp_nuevoProducto()
 	{
-		$sql = "select * from sp_nuevoProducto('{$this->producto}','{$this->precio}')";
+		$sql = "select * from sp_nuevoProducto('{$this->producto}','{$this->precio}','{$this->ctanda}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
+	public function sp_nuevoproductoduplicado()
+	{
+		$sql = "select * from sp_nuevoproductoduplicado('{$this->producto}','{$this->precio}','{$this->cantidadtanda}')";
 		//echo $sql;
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
@@ -71,9 +78,30 @@ class Recetario
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;
 	}
+	public function sp_duplicarreceta()
+	{
+		$sql = "select * from sp_duplicarreceta('{$this->id_productoFinal}','{$this->id_mp}','{$this->cantidad}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
+	public function sp_consultaproducto()
+	{
+		$sql = "select * from sp_consultaproducto('{$this->idproducto}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
 	public function sp_receta()
 	{
 		$sql = "select * from sp_receta('{$this->idproducto}')";
+		//echo $sql;
+		$resultado = $this->con->consultaRetorno($sql);
+		return $resultado;
+	}
+	public function sp_cambiarnombreReceta()
+	{
+		$sql = "select * from sp_cambiarnombreReceta('{$this->nombre}','{$this->idproducto}','{$this->cantidadtanda}')";
 		//echo $sql;
 		$resultado = $this->con->consultaRetorno($sql);
 		return $resultado;

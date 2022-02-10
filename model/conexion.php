@@ -19,7 +19,7 @@ class Conexion
 		//$this->password="Int3l1punt0.VEN";
 		//$this->password="Int3l1g3nsa";
 		$this->port='5432';
-		$this->dbname='ControlPankery';
+		$this->dbname='pankery';
 
 		$con=pg_connect("user= $this->user password = $this->password port= $this->port dbname=$this->dbname host=$this->host") or die('NO HAY CONEXION: ' . pg_last_error());
 	}

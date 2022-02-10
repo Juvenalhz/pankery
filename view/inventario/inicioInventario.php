@@ -56,7 +56,9 @@
                         <a class="nav-link" href="#" id="Actualizarmp">Actualizar</a>
                     </li>
                 </ul>
-                <form id="formInv" name="formInv" method="post" action=""> </form>
+                <div id="formularioinv">
+                
+                </div>
             </div>
         </div>
     </div>

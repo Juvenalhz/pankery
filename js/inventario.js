@@ -148,10 +148,11 @@ function pestañaModificarArticulo(value, id) {
   );
 }
 function pestañaNuevoArticulo() {
-  $("#formInv").empty();
+  $("#formInv").remove();
   $("#Nuevomp").addClass("active");
   $("#Actualizarmp").removeClass("active");
-  $("#formInv").append(
+  $("#formularioinv").append(
+    '<form id="formInv" name="formInv" method="post" action="">' + 
     '<div class="form-row" style="padding-top: 1em;">' +
       '<div class="form-group col-md-6">' +
       '<label for="materiaprima">Materia Prima</label>' +
@@ -160,13 +161,15 @@ function pestañaNuevoArticulo() {
       '<div class="modal-footer">' +
       '<button type="button" class=" btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
       '<button type="submit" class="btn btn-primary" id="guardarNuevoArticulo">Guardar</button></div>'
+      +'</form>' 
   );
 }
 function pestañaActualizarArticulo() {
-  $("#formInv").empty();
+  $("#formInv").remove();
   $("#Actualizarmp").addClass("active");
   $("#Nuevomp").removeClass("active");
-  $("#formInv").append(
+  $("#formularioinv").append(
+    '<form id="formInv" name="formInv" method="post" action="">' + 
     '<div class="form-row" style="padding-top: 1em;">' +
       '<div class="form-group col-md-6">' +
       '<label for="materiaprima">Materia Prima</label>' +
@@ -186,6 +189,7 @@ function pestañaActualizarArticulo() {
       '<div class="modal-footer">' +
       '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
       '<button type="submit" class="btn btn-primary" id="actualizarArticulo">Guardar</button></div>'
+      +'</form>' 
   );
   $("#materiaprimaAct").empty();
   $.ajax({

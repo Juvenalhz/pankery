@@ -22,7 +22,7 @@
                                 </div>
                                 <div class="text">
                                     <h2> <?php
-                                            echo $data["capital"];
+                                            echo round( $data["capital"], 2);
                                             ?></h2>
                                     <span>Capital total</span>
                                 </div>

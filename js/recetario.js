@@ -10,7 +10,7 @@ $(document).ready(function () {
     agregarMPReceta();
   });
   $(document).on("click", "#deleteMP", function () {
-   $(this).parent().remove();    
+    $(this).parent().remove();
   });
   $("table#dataRecetario tbody").on("click", "#recetario", function () {
     var table = $("table#dataRecetario").DataTable();
@@ -24,18 +24,60 @@ $(document).ready(function () {
     modificarReceta(id);
   });
 
+  $("table#dataRecetario tbody").on("click", "#nombrereceta2", function () {
+    var table = $("table#dataRecetario").DataTable();
+    var D = table.row($(this).parents("tr")).data();
+    var id = D.id_pro;
+    //$("#formnombre")[0].reset();
+    $("#formnombre").remove();
+    $("#formCambiarrec").append(
+
+      '<form id="formnombre" name="formnombre" method="post" action="">' +
+      '<input type="hidden" id="id_producto" name="id_producto" value="' + id + '">'
+      + '<div class="form-row">'
+      + ' <div class="form-group col-md-6">'
+      + '<label for="nombre2">Nombre </label>'
+      + '<input type="numeric" class="form-control" id="nombrerecetaproducto" name="nombrerecetaproducto">'
+      + '</div>'
+      + ' <div class="form-group col-md-6">'
+      + '<label for="nombre2">Cantidad/ tanda </label>'
+      + '<input type="numeric" class="form-control" id="cantidadtanda" name="cantidadtanda">'
+      + '</div>'
+      + '</div>'
+      + '<div class="form-group">'
+      + '<div class="modal-footer">'
+      + '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>'
+      + '<input type="submit" class="btn btn-primary lop" name="Guardare" id="guardarnombrereceta" value="Guardar"/>'
+      + '<input type="submit" class="btn btn-warning lop" name="Duplicare" id="duplicareceta" value="Duplicar"/>'
+      + '</div>'
+      + '</div>'
+      + '</form>'
+    );
+    modificarNombreReceta(id);
+  });
+
   $("table#dataRecetario tbody").on("click", "#verganancia", function () {
     var table = $("table#dataRecetario").DataTable();
     var D = table.row($(this).parents("tr")).data();
     var id = D.id_pro;
     $("#formganancia")[0].reset();
+    $("#id_producto").remove();
     $("#formganancia").append(
-      '<input type="hidden" name="id_producto" value="' + id + '">'
+      '<input type="hidden" id="id_producto" name="id_producto" value="' + id + '">'
     );
-    
+
   });
-  $("#guardarganancia").on("click",  function () {
+  $("#guardarganancia").on("click", function () {
     GuardarGanancia();
+  });
+
+  $(document).on("click", "#guardarnombrereceta", function () {
+    guardarnombrereceta();
+
+  });
+  $(document).on("click", "#duplicareceta", function () {
+    duplicaReceta();
+
   });
 
   $("table#dataRecetario").on("click", "#verreceta", function () {
@@ -43,13 +85,13 @@ $(document).ready(function () {
     var D = table.row($(this).parents("tr")).data();
     var id = D.id_pro;
     var descp = D.descp;
-    receta(id,descp);
+    receta(id, descp);
   });
   $(document).on("click", "#guardarReceta", function () {
     guardarReceta();
   });
 });
-function  receta(id,descp) {
+function receta(id, descp) {
   $("#listReceta").empty();
   index = 0;
   $.ajax({
@@ -61,24 +103,24 @@ function  receta(id,descp) {
       if (data == 0) {
         $("#listReceta").append(
           '<li class="list-group-item">' +
-            "No se ha agregado ninguna receta" +
-            "</li>"
+          "No se ha agregado ninguna receta" +
+          "</li>"
         );
       } else {
         $.each(JSON.parse(data), function (i, info) {
           index++;
           $("#listReceta").append(
             '<li class="list-group-item">' +
-              index +
-              " . " +
-              info.materiaprima +
-              " " +
-              info.cantidad +
-              " gr</li>"
+            index +
+            " . " +
+            info.materiaprima +
+            " " +
+            info.cantidad +
+            " gr</li>"
           );
         });
       }
-      
+
     },
   }).fail(function () {
     swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
@@ -88,28 +130,28 @@ function agregarMPReceta() {
   index++;
   $("#formreceta").append(
     '<div class="mprec">' +
-    "<button type='button' class='close' aria-label='Close' id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
+    "<button type='button' class='close' aria-label='Close' id='deleteMP'><span aria-hidden='true'>&times;</span></button>" +
     '<div class="form-row" style="padding-top: 1em;">' +
-      '<div class="form-group col-md-6">' +
-      '<label for="materiaprima">Materia Prima</label>' +
-      '   <select class="custom-select mr-sm-2" id="materiaprimaAct' +
-      index +
-      '" name="materiaprimaAct' +
-      index +
-      '">' +
-      "</select></div>" +
-      '<div class="form-group col-md-6">' +
-      '<label for="CantidadMP">Cantidad</label>' +
-      '<input type="numeric" class="form-control" id="CantidadMPAct' +
-      index +
-      '" name="CantidadMPAct' +
-      index +
-      '"></div></div></div>'
+    '<div class="form-group col-md-6">' +
+    '<label for="materiaprima">Materia Prima</label>' +
+    '   <select class="custom-select mr-sm-2" id="materiaprimaAct' +
+    index +
+    '" name="materiaprimaAct' +
+    index +
+    '">' +
+    "</select></div>" +
+    '<div class="form-group col-md-6">' +
+    '<label for="CantidadMP">Cantidad</label>' +
+    '<input type="numeric" class="form-control" id="CantidadMPAct' +
+    index +
+    '" name="CantidadMPAct' +
+    index +
+    '"></div></div></div>'
   );
   ListaMP = "#materiaprimaAct" + index;
   //  $("#materiaprimaAct").empty();
   $.ajax({
-    url: "view/inventario/listamp.php",
+    url: "view/recetario/listampconprecio.php",
     type: "POST",
     contentType: false,
     cache: false,
@@ -117,15 +159,24 @@ function agregarMPReceta() {
     success: function (data) {
       $(ListaMP).append("<option>Seleccione</option>");
       $.each(JSON.parse(data), function (i, info) {
-        $(ListaMP).append(
-          '<option value="' +
-            info.id_mp +
-            '" id="mp_' +
-            info.descp +
-            '">' +
-            info.descp +
-            "</option>"
-        );
+        for (let j = 1; j <= index; j++) {
+          ListaMPseleccionados = "#materiaprimaAct" + j;
+          if ($(ListaMPseleccionados).val() == info.id_mp) {
+            break;
+          } else {
+            if (j < index) continue;
+            $(ListaMP).append(
+              '<option value="' +
+              info.id_mp +
+              '" id="mp_' +
+              info.descp +
+              '">' +
+              info.descp +
+              "</option>"
+            );
+
+          }
+        }
       });
     },
   }).fail(function () {
@@ -137,16 +188,19 @@ function pestañaNuevoProducto() {
   $("#formRec").empty();
   $("#formRec").append(
     '<div class="form-row" style="padding-top: 1em;">' +
-      '<div class="form-group col-md-6">' +
-      '<label for="materiaprima">Producto</label>' +
-      '<input type="text" class="form-control" id="productoRec" name="productoRec"></div>' +
-      '<div class="form-group col-md-6">' +
-      '<label for="materiaprima" style="display:none;">Precio</label>' +
-      '<input type="text" class="form-control" id="preciouni" name="preciouni" value="0" style="display:none;"></div></div>' +
-      '<div class="form-group">' +
-      '<div class="modal-footer">' +
-      '<button type="button" class=" btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
-      '<button type="submit" class="btn btn-primary" id="guardarproducto">Guardar</button></div>'
+    '<div class="form-group col-md-6">' +
+    '<label for="materiaprima">Producto</label>' +
+    '<input type="text" class="form-control" id="productoRec" name="productoRec"></div>' +
+    '<div class="form-group col-md-6">' +
+    '<label for="materiaprima">Cantidad/ Tanda</label>' +
+    '<input type="text" class="form-control" id="ctanda" name="ctanda"></div>' +
+    '<div class="form-group col-md-6">' +
+    '<label for="materiaprima" style="display:none;">Precio</label>' +
+    '<input type="text" class="form-control" id="preciouni" name="preciouni" value="0" style="display:none;"></div></div>' +
+    '<div class="form-group">' +
+    '<div class="modal-footer">' +
+    '<button type="button" class=" btn btn-secondary" data-dismiss="modal">Cerrar</button>' +
+    '<button type="submit" class="btn btn-primary" id="guardarproducto">Guardar</button></div>'
   );
 }
 
@@ -162,6 +216,12 @@ function GuardarNuevoProducto() {
         number: true,
         max: 999,
       },
+      ctanda: {
+        required: true,
+        number: true,
+        max: 999,
+      },
+
     },
     messages: {
       productoRec: {
@@ -169,6 +229,11 @@ function GuardarNuevoProducto() {
         maxlength: "Excede el máximo de caracteres (25).",
       },
       preciouni: {
+        required: "Este campo es obligatorio.",
+        number: "Ingrese solo números",
+        max: "Este campo no puede tener más de tres dígitos.",
+      },
+      ctanda: {
         required: "Este campo es obligatorio.",
         number: "Ingrese solo números",
         max: "Este campo no puede tener más de tres dígitos.",
@@ -215,6 +280,160 @@ function GuardarNuevoProducto() {
               },
             }).then((result) => {
               // location.reload();
+            });
+          }
+        },
+      }).fail(function () {
+        swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
+      });
+    },
+  });
+}
+function duplicaReceta() {
+  $("form[name='formnombre']").validate({
+    rules: {
+      nombrerecetaproducto: {
+        required: true,
+        maxlength: 50,
+      },
+      cantidadtanda: {
+        required: true,
+        maxlength: 50,
+        number: true,
+      },
+    },
+    messages: {
+      nombrerecetaproducto: {
+        required: "Este campo es obligatorio.",
+        maxlength: "Excede el máximo de caracteres (50).",
+      },
+      cantidadtanda: {
+        required: "Este campo es obligatorio.",
+        number: "Ingrese solo números",
+        max: "Este campo no puede tener más de tres dígitos.",
+      },
+    },
+    submitHandler: function () {
+      // var file_data = $('#file').prop('files')[0];
+      var datos = new FormData($("form#formnombre")[0]);
+
+      $.ajax({
+        url: "view/recetario/duplicarReceta.php",
+        type: "POST",
+        data: datos,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+          if (data != 0) {
+            _Title = "¡Enhorabuena!";
+            _Text = "Transacción exitosa";
+            _Type = "success";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1300,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#nombreReceta").modal('toggle');
+            });
+          } else {
+            _Title = "Error!";
+            _Text = "Debe cambiar el nombre.";
+            _Type = "error";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1700,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#nombreReceta").modal('toggle');
+              // location.reload();
+            });
+          }
+        },
+      }).fail(function () {
+        swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
+      });
+    },
+  });
+}
+function guardarnombrereceta() {
+  $("form[name='formnombre']").validate({
+    rules: {
+      nombrerecetaproducto: {
+        required: true,
+        maxlength: 50,
+      },
+      cantidadtanda: {
+        required: true,
+        maxlength: 50,
+        number: true,
+      },
+    },
+    messages: {
+      nombrerecetaproducto: {
+        required: "Este campo es obligatorio.",
+        maxlength: "Excede el máximo de caracteres (50).",
+      },
+      cantidadtanda: {
+        required: "Este campo es obligatorio.",
+        number: "Ingrese solo números",
+        max: "Este campo no puede tener más de tres dígitos.",
+      },
+    },
+    submitHandler: function () {
+      // var file_data = $('#file').prop('files')[0];
+      var datos = new FormData($("form#formnombre")[0]);
+      $.ajax({
+        url: "view/recetario/modifNombreReceta.php",
+        type: "POST",
+        data: datos,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (data) {
+          if (data != 0) {
+            _Title = "¡Enhorabuena!";
+            _Text = "Transacción exitosa";
+            _Type = "success";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1300,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#nombreReceta").modal('toggle');
+            });
+          } else {
+            _Title = "Error!";
+            _Text = "Error.";
+            _Type = "error";
+            Swal.fire({
+              text: _Text,
+              title: _Title,
+              timer: 1700,
+              icon: _Type,
+              onBeforeOpen: function () {
+                swal.showLoading();
+              },
+            }).then((result) => {
+              // location.reload();
+              $("table#dataRecetario").DataTable().ajax.reload();
+              $("#nombreReceta").modal('toggle');
+              result.preventDefault();
             });
           }
         },
@@ -293,9 +512,9 @@ function guardarReceta() {
     validacion = "#materiaprimaAct" + i;
     validacion2 = "#CantidadMPAct" + i;
     if (
-      
+
       $(validacion).val() == "Seleccione" ||
-     
+
       $(validacion2).val() == ""
     ) {
       Swal.fire({
@@ -368,32 +587,32 @@ function modificarReceta(id) {
           index = index + 1;
           $("#formreceta").append(
             '<div>' +
-            "<button type='button' class='close' aria-label='Close'  id='deleteMP'><span aria-hidden='true'>&times;</span></button>"+
+            "<button type='button' class='close' aria-label='Close'  id='deleteMP'><span aria-hidden='true'>&times;</span></button>" +
             '<div class="form-row" style="padding-top: 1em;">' +
-              '<div class="form-group col-md-6">' +
-              '<label for="materiaprima">Materia Prima</label>' +
-              '   <select class="custom-select mr-sm-2" id="materiaprimaAct' +
-              index +
-              '" name="materiaprimaAct' +
-              index +
-              '">' +
-              '<option value="' +
-              info.id_mp +
-              '" id="mp_' +
-              info.materia_prima +
-              '">' +
-              info.materia_prima +
-              "</option>" +
-              "</select></div>" +
-              '<div class="form-group col-md-6">' +
-              '<label for="CantidadMP">Cantidad</label>' +
-              '<input type="numeric" class="form-control" id="CantidadMPAct' +
-              index +
-              '" name="CantidadMPAct' +
-              index +
-              '" value="' +
-              info.cantidad +
-              '"></div></div></div>'
+            '<div class="form-group col-md-6">' +
+            '<label for="materiaprima">Materia Prima</label>' +
+            '   <select class="custom-select mr-sm-2" id="materiaprimaAct' +
+            index +
+            '" name="materiaprimaAct' +
+            index +
+            '">' +
+            '<option value="' +
+            info.id_mp +
+            '" id="mp_' +
+            info.materia_prima +
+            '">' +
+            info.materia_prima +
+            "</option>" +
+            "</select></div>" +
+            '<div class="form-group col-md-6">' +
+            '<label for="CantidadMP">Cantidad</label>' +
+            '<input type="numeric" class="form-control" id="CantidadMPAct' +
+            index +
+            '" name="CantidadMPAct' +
+            index +
+            '" value="' +
+            info.cantidad +
+            '"></div></div></div>'
           );
         });
       } else {
@@ -417,26 +636,48 @@ function modificarReceta(id) {
                   ListaMPseleccionados = "#materiaprimaAct" + j;
                   if ($(ListaMPseleccionados).val() == info.id_mp) {
                     break;
-                  }else {
+                  } else {
                     if (j < index) continue;
                     $(ListaMP).append(
                       '<option value="' +
-                        info.id_mp +
-                        '" id="mp_' +
-                        info.descp +
-                        '">' +
-                        info.descp +
-                        "</option>"
+                      info.id_mp +
+                      '" id="mp_' +
+                      info.descp +
+                      '">' +
+                      info.descp +
+                      "</option>"
                     );
 
                   }
                 }
-                });
+              });
             },
           });
         }
       }
     })
+
+    .fail(function () {
+      swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");
+    });
+}
+function modificarNombreReceta(id) {
+  $.ajax({
+    url: "view/recetario/modificarNombreReceta.php",
+    type: "POST",
+    data: { id: id },
+    success: function (data) {
+      // if (data != 0) {
+      //   console.log(data);
+      // } else {
+      //   return false;
+      // }
+      $("#nombrerecetaproducto").val(JSON.parse(data).descp);
+      $("#cantidadtanda").val(JSON.parse(data).ctanda);
+
+
+    },
+  })
 
     .fail(function () {
       swal("FATAL-ERROR", " ERROR DE AJAX :( :( ", "error");

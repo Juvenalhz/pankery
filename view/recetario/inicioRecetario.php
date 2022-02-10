@@ -77,7 +77,7 @@
     <div class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="tituloReceta">Ganancia</h5>
+                <h5 class="modal-title" id="GanaciaAgg">Ganancia</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -97,6 +97,24 @@
                         </div>
                     </div>
                 </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-sm" id="nombreReceta" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered  modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloRecetaChange">Cambiar o Duplicar Receta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="tab-pane container" id="nombre">
+            <div id='formCambiarrec'>
+            
+            </div>
+                
             </div>
         </div>
     </div>

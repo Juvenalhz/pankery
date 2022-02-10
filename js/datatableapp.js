@@ -179,7 +179,7 @@ function datatables_apps() {
       {
         defaultContent: "",
         render: function (data, type, full, meta) {
-          return "<div class='btn-group' role='group' aria-label='Basic example'><button class='recetario btn btn-primary' data-toggle='modal' data-target='#modificarMateriaPrimaRecetario' type='button' id='recetario' title='modificarError'><i class='fas fa-edit' aria-hidden='true'></i> </button><button class= 'verreceta btn btn-warning' type='button'  data-toggle='modal' data-target='#verReceta' title='verreceta' id='verreceta'><i class='fas fa-eye'></i> </button><button class= 'verganancia btn btn-success' type='button'  data-toggle='modal' data-target='#agregarganancia' title='verganancia' id='verganancia'><i class='fas fa-dollar'></i> </button></div>";
+          return "<div class='btn-group' role='group' aria-label='Basic example'><button class='recetario btn btn-primary' data-toggle='modal' data-target='#modificarMateriaPrimaRecetario' type='button' id='recetario' title='modificarError'><i class='fas fa-list' aria-hidden='true'></i> </button><button class= 'verreceta btn btn-warning' type='button'  data-toggle='modal' data-target='#verReceta' title='verreceta' id='verreceta'><i class='fas fa-eye'></i> </button><button class= 'verganancia btn btn-success' type='button'  data-toggle='modal' data-target='#agregarganancia' title='verganancia' id='verganancia'><i class='fas fa-dollar'></i> </button><button class= 'verreceta btn btn-danger' type='button'  data-toggle='modal' data-target='#nombreReceta'  id='nombrereceta2'><i class='fas fa-edit'></i> </button></div>";
         },
       },
     ],
